@@ -1,0 +1,38 @@
+#Kevin Neal
+#1/8/15
+#2.13.1 in SCB book
+
+1. ls [A-Z]*
+#lists files and descriptions of files in current folder, in alphabetical order
+2. cp *.sh /tmp
+#no such file or directory... but should copy all files that end with .sh to /tmp folder
+3. man pwd
+#brings up entry for "pwd" in the manual
+4. cd ~
+#moves to home directory
+5. mkdir -p test1/test2/test3
+#creates directories; -p allows missing parent directories to be created as needed
+6. cp -r /tmp .
+#copies all subdirectories and files from /tmp to current directory (.)
+#but not really... seems it is copying /tmp from . and moving it to, uh, .
+#however, doing e.g. cp -r /tmp/test . would copy the subdirectory /test into the current directory
+7. ls | less
+#pipes the contents of the current directory into a text viewer within the terminal
+#press q to exit!
+8. head -n 24 test.txt » abc.txt
+#print the first 24 lines, sorted numerically, of test.txt and append them to file abc.txt
+#will create abc.txt if doesn't already exist, otherwise puts the text at end of file
+9. echo "aaa" > aaa.txt
+#creates a file aaa.txt with the string "aaa" within
+10. ps -u sallesina
+#prints processes being run by a user named sallesina
+11. top
+#shows all tasks/processes being run by every user on the system
+12. ls | grep .sh | xargs mv /tmp
+#grep matches all files in current directory that contain .sh and moves
+#them into /tmp, or should? but error: "mv: missing destination file operand after '/tmp'"
+13. du -sk /home/* | sort -r -n | head -10
+#du summarizes disk usage of directories in /home/; -sk (sum of directories in kilobytes)
+#sorted reverse-numerically, and prints the first 10 lines???
+14. sort -r names.txt
+#reverse-sort lines in names.txt

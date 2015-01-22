@@ -1,0 +1,30 @@
+Kevin Neal
+EEB234 
+Regular Expressions homework
+
+In shell, \d and \w don't work. Can sub [[:digit:]] or [0-9] for \d
+Also reads +, ?, {, }, |, (, and ) literally; for their special usage must escape with \
+so [0-9]\+ matches a string of numbers of length 1 or longer
+while [0-9]+ matches a string of a digit and +
+Can bypass this by using egrep or grep -E to use extended regex rather than GNU
+
+wget https://raw.githubusercontent.com/discourse/discourse/master/lib/common_passwords/10k-common-passwords.txt
+
+Regular expressions assignment
+1. Passwords that contain your lowercase first name
+grep 'kevin' 10k-common-passwords.txt
+
+2. Passwords that start with the letter a
+grep '^a' 10k-common-passwords.txt
+
+3. Passwords that only consist of numbers
+grep '^[0-9]\+$' 10k-common-passwords.txt
+egrep '^[0-9]+$' 10k-common-passwords.txt
+
+4. Passwords that have any 5 letters followed by two numbers
+grep '^[A-Za-z]\{5\}[0-9]\{2\}$' 10k-common-passwords.txt
+egrep '^[A-Za-z]{5}[0-9]{2}$' 10k-common-passwords.txt
+
+5. Passwords that contain a repeated 3 letter pattern (e.g. dogdog or catcat)
+grep '\([A-Za-z]\{3\}\)\1' 10k-common-passwords.txt
+egrep '([A-Za-z]{3})\1' 10k-common-passwords.txt

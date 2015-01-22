@@ -1,0 +1,96 @@
+Kevin Neal
+EEB234 lecture 1-13 and 1-15: Regular Expressions
+
+Working with text in text editors
+line endings are indicated by special characters
+In Windows: \r\n
+in Unix and OSX: \n
+In Unix shell, \d and \w don't work. Can sub [[:digit:]] or [0-9] for \d
+Also reads +, ?, {, |, (, and ) literally; for their special usage must escape with \
+so [0-9]\+ matches a string of numbers of length 1 or longer
+[0-9]+ matches a string of a digit and +
+Can bypass this by using egrep or grep -E to use extended regex rather than POSIX
+
+notes from 1-15
+Regex:
+\w stands for any letter or number or _
+capturing with () and reusing captured text
+-parentheses are used to capture parts of original text and create replacement text
+example: try this with Tebow:
+	find \w\w(b\w+)
+	replace: el\1
+	
+For fish file: want to convert to first letter of genus
+	find: (\w)\w+ (\w+)
+	replace: \1_\2 #these reproduce the captured text; \1 reproduces
+	#the text captured in the first set of parentheses; \2 reproduces
+	#the text captured in the 2nd set, etc. Counts these sets by the 
+	#order of the left parenthesis
+	e.g. ((\w+)w+) the nested parentheses can be reproduced with \2; the outer
+	#with \1
+	
+example from slides:
+	use regex with "rainbow connection"
+	find: (\w\w\w\w)(\w+) (\w+)
+	replace: \1, \1, go away #replaces "rainbow connection" with 
+	#"rain, rain, go away"
+
+another example from the fish file (infile.txt):
+replace e.g. Procottus major with "Procottus major P_major"
+	Find: ((\w)\w+ (\w+))
+	Replace: \1 \2_\3
+	
+Escaping
+	# if you wanted to search for a literal special character, e.g. (, 
+	# you can search as "\("
+	
+Common search wildcards
+	\w alphanumeric or _ character
+	\t tabs
+	\s white space (spaces, tabs, end of line)
+	\r, \n end of line
+	\d any digit
+	. any character at all
+	* zero or more of a character
+	? 0 or 1 of a character
+	+ 1 or more of a character
+	
+another example
+capture the lat and long deg pairs, separate with tabs, and leave out directions
++40 46.1'N
++(40) (46.1)'N
+(.\d+) (\d+\.\d)'\w
+
++40 46.1'N +14 15.8'E
+to find this line:
+Find: (.\d+) (\d+\.\d)'\w\s+(.\d+) (\d+\.\d)'\w
+And replace with latlong pairs with tabs: \1\t\2\t\3\t\4
+
+from latlong2 example:
+-9 59.8'S -157.2'W
++21 17.4'N +157 51.6'W
++38 30.5'N +28 17.2'W
++40 46.1'N +14 15.8'E
++10 24.8'N +51 21.9'E
+
+.\d+\s+\d+\.\d'\w\s+.\d+\.?\d?\s?\d+?\.?\d?'\w
+
+If we just ignore that wonky first line, can use:
+.\d+\s+\d+\.\d'\w\s+.\d+\s+\d+\.\d'\w
+
+to replace with numbers separated by tab:
+find: (.\d+\s+\d+\.\d)'\w\s+(.\d+\s+\d+\.\d)'\w
+replace: \1\t\2
+
+example for file FPexamples.fta:
+write a regex to change name so it is the initial identifier and genus name
+only followed by sequence on next line--for example >CAA58790_Aequorea
+find: (>\w+)\.\w.\s+(\w+-?\s*)+\[(\w+).+\]
+replace: \1_\3\r\n
+
+example for NW_hal_only.tree:
+change all taxon names so that genus
+is abbreviated and followed by period, species name
+e.g. Paedocypris_progenetica->P. progenetica
+Find: ([A-Za-z])[A-Za-z]+_([A-Za-z]+\.?)
+Replace: \1\. \2

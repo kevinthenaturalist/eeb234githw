@@ -1,0 +1,20 @@
+Kevin Neal
+EEB 234 extra credit
+http://regexone.com/
+
+1 abc
+1.5 \d+
+2. ...\.
+3. [cmf]an
+4. [^b]og
+5. [A-C][n-p][a-c]
+6. waz{2,}up or waz+up
+7. a+b*c+
+8. \w files? found\?
+9. \d\.\s+abc
+10. ^Mission: successful$
+11. (^file_\w+).pdf$
+12. (\w+ (\d+))
+13. (\d+)x(\d+)
+14. I love (cats|dogs)
+15. (\w+\s*)+\S+.+
